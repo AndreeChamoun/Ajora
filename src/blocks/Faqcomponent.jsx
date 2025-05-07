@@ -1,8 +1,7 @@
 import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { SlideDown } from "react-slidedown";
-import "react-slidedown/lib/slidedown.css";
 
 const FaqItem = ({ item, index }) => {
   const [active, setActive] = useState(false);
@@ -41,13 +40,19 @@ const FaqItem = ({ item, index }) => {
         </div>
       </div>
 
-      <SlideDown>
+      <AnimatePresence initial={false}>
         {active && (
-          <div id={`faq-content-${item.id}`} className="body-3 px-7 py-3.5">
+          <motion.div
+            id={`faq-content-${item.id}`}
+            className="body-3 px-7 py-3.5 overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}>
             {item.answer}
-          </div>
+          </motion.div>
         )}
-      </SlideDown>
+      </AnimatePresence>
 
       <div
         className={clsx(
@@ -60,6 +65,7 @@ const FaqItem = ({ item, index }) => {
     </div>
   );
 };
+
 FaqItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
