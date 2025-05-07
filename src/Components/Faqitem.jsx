@@ -1,20 +1,23 @@
 import clsx from "clsx";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { SlideDown } from "react-slidedown";
 import "react-slidedown/lib/slidedown.css";
 
 const FaqItem = ({ item, index }) => {
-  const [activeId, setActiveId] = useState(null);
+  const [active, setActive] = useState(false);
 
-  const active = activeId === item.id;
+  const toggleActive = () => {
+    setActive((prev) => !prev);
+  };
 
   return (
     <div className="relative z-2 mb-16">
       <div
         className="group relative flex cursor-pointer items-center justify-between gap-10 px-7"
-        onClick={() => {
-          setActiveId(activeId === item.id ? null : item.id);
-        }}>
+        onClick={toggleActive}
+        aria-expanded={active}
+        aria-controls={`faq-content-${item.id}`}>
         <div className="flex-1">
           <div className="small-compact mb-1.5 text-p3 max-lg:hidden">
             {index < 10 ? "0" : ""}
@@ -39,8 +42,10 @@ const FaqItem = ({ item, index }) => {
       </div>
 
       <SlideDown>
-        {activeId === item.id && (
-          <div className="body-3 px-7 py-3.5">{item.answer}</div>
+        {active && (
+          <div id={`faq-content-${item.id}`} className="body-3 px-7 py-3.5">
+            {item.answer}
+          </div>
         )}
       </SlideDown>
 
@@ -55,4 +60,13 @@ const FaqItem = ({ item, index }) => {
     </div>
   );
 };
+FaqItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    question: PropTypes.string.isRequired,
+    answer: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};
+
 export default FaqItem;
