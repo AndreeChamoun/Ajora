@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import Marker from "./Marker"; // Adjust the path as needed
+import Marker from "../../components/Marker"; // Adjust the path as needed
 
 const Button = ({
   icon,
