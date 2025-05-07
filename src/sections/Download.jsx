@@ -1,6 +1,6 @@
 import { Element } from "react-scroll";
 
-import Marker from "../blocks/markers.jsx";
+import Marker from "../blocks/Markers.jsx";
 import { links, logos } from "../constants/index.jsx";
 
 const Download = () => {
