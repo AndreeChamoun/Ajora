@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import PropTypes from "prop-types";
 import Marker from "./Marker";
 
 const Button = ({
@@ -52,4 +53,13 @@ const Button = ({
     </button>
   );
 };
+Button.propTypes = {
+  icon: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  href: PropTypes.string,
+  containerClassName: PropTypes.string,
+  onClick: PropTypes.func,
+  markerFill: PropTypes.string,
+};
+
 export default Button;
